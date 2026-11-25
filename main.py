@@ -1,31 +1,29 @@
 #!/usr/bin/env python3
-"""NapTrack Pro — the worst app idea ever pitched.
+# SPDX-License-Identifier: MIT
+"""NapTrack Pro pitches the worst app idea ever, in one sentence.
 
-A tiny deterministic program for the make.fun bounty
-"The Worst App Idea Ever Pitched". It writes exactly one sentence —
-a pitch for an app nobody on earth needs — to /output/entry.txt.
-
-The output is byte-identical on every run: no randomness, no clock,
-no network, no input. The sentence is 158 characters, inside the
-bounty cap of 240.
+This program exists for the make.fun bounty "The Worst App Idea Ever
+Pitched". Running it drops a single 158-character sentence into
+/output/entry.txt. The run is fully deterministic: no randomness, no
+clock reads, no network calls and no user input, so repeated runs
+produce byte-identical files.
 """
 
-import os
+from pathlib import Path
 
-ENTRY = (
-    "Introducing NapTrack Pro: an app that tracks exactly how long "
-    "your phone naps while you sleep, then charges you $4.99 a month "
-    "to remind you it was asleep too."
+PITCH = (
+    "Introducing NapTrack Pro: an app that tracks exactly how "
+    "long your phone naps while you sleep, then charges you "
+    "$4.99 a month to remind you it was asleep too."
 )
 
-OUTPUT_PATH = "/output/entry.txt"
+DESTINATION = Path("/output/entry.txt")
 
 
-def main() -> None:
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8", newline="") as handle:
-        handle.write(ENTRY)
+def run() -> None:
+    DESTINATION.parent.mkdir(parents=True, exist_ok=True)
+    DESTINATION.write_text(PITCH, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    run()
